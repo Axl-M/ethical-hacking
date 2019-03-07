@@ -1,2 +1,2 @@
-# ethical-hacking-python-shell
+# ethical-hacking
 Ethical Hacking Scripts in Python and Shell
