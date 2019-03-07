@@ -20,6 +20,7 @@ def get_arguments():
 
 
 def random_mac():
+    # TO DO
     v = 'xx'
     return v
 
