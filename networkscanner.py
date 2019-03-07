@@ -55,7 +55,7 @@ def scan_network(ip):
     for answer in answered_list:
         # print(answer[0])  # packet sent
         # print(answer[1].show())  # packet received
-        client_dict = {"mac": answer[1].psrc, "ip": answer[1].hwsrc}
+        client_dict = {"mac": answer[1].hwsrc, "ip": answer[1].psrc}
         clients_list.append(client_dict)
 
     return clients_list
