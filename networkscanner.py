@@ -3,9 +3,6 @@
 import os
 import argparse
 import scapy.all as scapy
-# import logging
-# logging.getLogger("kamene.runtime").setLevel(logging.ERROR)
-# import kamene.all as scapy
 
 
 def get_arguments():
