@@ -90,6 +90,7 @@ router_ip   = get_router_ip(opsys)
 print("[+] Your target's IP:")
 victim_ip = options.target
 print(victim_ip)
+print(" ")
 
 while True:
     # send spoof packets continuously to router and victim
