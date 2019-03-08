@@ -42,7 +42,8 @@ def get_mac(ip):
     answered_list, unanswered_list = scapy.srp(arp_request_broadcast, timeout=5, verbose=False)  # packet, timeout
 
     # return target's MAC address
-    return answered_list[0][1].hwsrc
+    for answer in answered_list:
+        return answer[1].hwsrc
 
 
 def spoof(target_ip,spoof_ip):
