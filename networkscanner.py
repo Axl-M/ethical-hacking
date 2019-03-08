@@ -67,7 +67,7 @@ def print_clients(clients_list):
 
     # received responses
     for client in clients_list:
-        print(client["mac"] + "\t\t" + client["ip"])
+        print(client["ip"] + "\t\t" + client["mac"])
 
     print(" ")
 
