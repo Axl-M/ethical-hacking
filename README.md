@@ -18,7 +18,7 @@ Usage:
     $ python3 macchanger.py -i <interface> -m <mac>
 ```  
 
-Both the --interface and the --mac parameters are optional.
+Both the --interface and the --mac parameters are optional. If you don't provide an interface, you'll be prompted with a list of interfaces found on your machine. If you don't provide a MAC, it will be generated randomly.
 
 
 ### Network Scanner
