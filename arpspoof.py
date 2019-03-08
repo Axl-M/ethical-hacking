@@ -59,6 +59,7 @@ def spoof(target_ip,spoof_ip):
 
     print(packet.summary())
     print(packet.show())
+    print(" ")
 
     scapy.send(packet, verbose=False)
 
@@ -67,16 +68,16 @@ def check_os():
     # Check the Operating System
     from sys import platform
     if platform == "linux" or platform == "linux2":
-        print("[+] You are running: Linux")
+        print("[+] You are running: Linux\n")
         return "Linux"
     elif platform == "darwin":
-        print("[+] You are running: OSX")
+        print("[+] You are running: OSX\n")
         return "OSX"
     elif platform == "win32":
-        print("[+] You are running: Windows")
+        print("[+] You are running: Windows\n")
         return "Windows"
     else:
-        print("[+] You are running: Other Operating System")
+        print("[+] You are running: Other Operating System\n")
         return "Other"
 
 
