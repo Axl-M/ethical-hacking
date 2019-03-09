@@ -3,11 +3,10 @@
 import re
 import os
 import sys
-import time
-import argparse
+import socket
+# import argparse
 import subprocess
 import scapy.all as scapy
-import socket
 
 
 def check_os():
@@ -70,7 +69,7 @@ def scan_network(ip):
     answered_list, unanswered_list = scapy.srp(arp_request_broadcast, timeout=5, verbose=False)  # packet, timeout
     print("[+] Received " + str(len(answered_list)) + " responses:\n")
 
-    # process answers
+    # process responses
     clients_list = []
     for answer in answered_list:
         client_dict = {"mac": answer[1].hwsrc, "ip": answer[1].psrc}
