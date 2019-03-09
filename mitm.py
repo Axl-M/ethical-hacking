@@ -56,6 +56,9 @@ def get_router_ip(opsys):
         return os.popen('netstat -nr | grep default | grep -o \'[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\'').read()
 
 
+def arp_network():
+    return os.popen('arp -a').read()
+
 def scan_network(ip):
     print("\n[+] Scanning IP range for connected clients: " + ip)
 
@@ -102,7 +105,7 @@ print("[+] Your local IP:\t" + my_ip)
 print("[+] Your device's MAC:\t" + my_mac)
 print("[+] Your router's IP:\t" + router_ip)
 
-# Get network IPs
+# Scan network's connected devices (IPs and MACs)
 my_subnet       = my_ip.rpartition('.')[0] + ".1/24"
 router_subnet   = router_ip.rpartition('.')[0] + ".1/24"
 
@@ -112,4 +115,14 @@ print_clients(scan_result)
 if my_subnet != router_subnet:
     scan_result = scan_network(router_subnet)
     print_clients(scan_result)
+
+arp_devices = arp_network()
+print(arp_devices)
+
+# List own device and router separately
+
+# Allow package routing (packetforwarding.sh)
+
+# Spoof all devices (using list of connected devices)
+
 
