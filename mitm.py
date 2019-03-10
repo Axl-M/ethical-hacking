@@ -50,14 +50,15 @@ def get_current_mac(interface):
 
 
 def get_router_ip(opsys):
-    if opsys == "Linux":
-        return os.popen('ip route show | grep - i \'default via\' | awk \'{print $3 }\'').read()
-    else:
+    if opsys == "OSX":
         return os.popen('netstat -nr | grep default | grep -o \'[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\'').read()
+    else:
+        return os.popen('ip route show | grep - i \'default via\' | awk \'{print $3 }\'').read()
 
 
 def arp_network():
     return os.popen('arp -a').read()
+
 
 def scan_network(ip):
     print("\n[+] Scanning IP range for connected clients: " + ip)
@@ -105,17 +106,19 @@ print("[+] Your local IP:\t" + my_ip)
 print("[+] Your device's MAC:\t" + my_mac)
 print("[+] Your router's IP:\t" + router_ip)
 
-# Scan network's connected devices (IPs and MACs)
+# Scan current sub-network's connected devices (IPs and MACs)
 my_subnet       = my_ip.rpartition('.')[0] + ".1/24"
 router_subnet   = router_ip.rpartition('.')[0] + ".1/24"
 
 scan_result = scan_network(my_subnet)
 print_clients(scan_result)
 
+# Scan router's sub-network (if it's different)
 if my_subnet != router_subnet:
     scan_result = scan_network(router_subnet)
     print_clients(scan_result)
 
+# Scan with "arp -a" command, just in case
 arp_devices = arp_network()
 print(arp_devices)
 
