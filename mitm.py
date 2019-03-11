@@ -203,5 +203,5 @@ while True:
         spoof(client,router)
         spoof(router,client)
         print("[+] Sent two spoof packets: " + client["ip"] + " & " + router_ip)
-        time.sleep(2)
+    time.sleep(2)
 
