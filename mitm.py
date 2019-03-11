@@ -204,6 +204,7 @@ while True:
         spoof(client,router)
         spoof(router,client)
         sent_packets_count = sent_packets_count + 2
-        print("[+] Sent 2 spoof packets (" + str(sent_packets_count) + " total): " + client["ip"] + " & " + router_ip)
+        print("\r[+] Sent 2 spoof packets (" + str(sent_packets_count) + " total): " + client["ip"] + " & " + router_ip, end="")
+        sys.stdout.flush()
     time.sleep(2)
 
