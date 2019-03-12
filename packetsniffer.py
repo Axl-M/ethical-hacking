@@ -3,6 +3,7 @@
 import os
 import scapy.all as scapy
 from scapy.layers import http
+from scapy.layers import inet
 
 
 def sniff(interface):
@@ -40,11 +41,14 @@ def get_sensitive_info(packet):
 
 def process_sniffed_packet(packet):
     if packet.haslayer(http.HTTPRequest):
-        print(packet.summary())
-        # print(packet.show())
-        # print(packet[Ethernet].src + packet[Ethernet].dst)
         url = get_url(packet)
         print("[+] " + packet[http.HTTPRequest].Method + " " + url)
+
+        print(packet.summary())
+        # print(packet.show())
+        # print(packet[inet.Ether])
+        # print(packet[Ethernet].src + packet[Ethernet].dst)
+
         sensitive_info = get_sensitive_info(packet)
         if sensitive_info:
             print("\n\n[+] Possible sensitive information: " + sensitive_info + "\n\n")
