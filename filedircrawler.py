@@ -7,6 +7,7 @@
 import requests
 import argparse
 import sys
+import re
 
 
 def get_arguments():
@@ -43,8 +44,13 @@ try:
             # time.sleep(0.1)
             filedir     = target_url + "/" + line.strip()
             response    = request(filedir)
-            if response and response.status_code != 300:
-                # print(response.status_code)
+            error_404   = []
+
+            if response.content:
+                html = response.content
+                error_404   = re.findall(r"ERROR 404",html)
+
+            if response and response.status_code != 300 and response.status_code != 404 and len(error_404) == 0:
                 valid_filedirs.append(filedir)
                 print("\n[+] Discovered file or directory: " + filedir)
             else:
