@@ -44,7 +44,7 @@ try:
             filedir     = target_url + "/" + line.strip()
             response    = request(filedir)
             if response and response.status_code != 300:
-                print(response.status_code)
+                # print(response.status_code)
                 valid_filedirs.append(filedir)
                 print("\n[+] Discovered file or directory: " + filedir)
             else:
