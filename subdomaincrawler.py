@@ -55,4 +55,4 @@ try:
 except KeyboardInterrupt:
     print("\n")
     print(valid_subdomains)
-    print ("\n[-] Quitting webcrawler.py")
+    print ("\n[-] Quitting subdomaincrawler.py")
